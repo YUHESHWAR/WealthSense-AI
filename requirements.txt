@@ -1,0 +1,11 @@
+google-cloud-aiplatform
+google-adk
+mcp
+yfinance
+pandas
+numpy
+requests
+python-dotenv
+pydantic
+pytest
+nest-asyncio
