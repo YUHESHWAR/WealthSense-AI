@@ -81,23 +81,31 @@ Everything runs inside a single notebook / script using an agentic orchestration
 The system uses a **Master Orchestrator Agent** plus several specialized tools.
 
 ### High‑Level Flow
-R -->|Analyze my portfolio| M[get_portfolio_state]
-M --> PV[Compute current value & P/L]
-PV --> A[Risk & Trend Analysis]
 
-R -->|Suggest new investments| W[search_market_trends]
-W --> C[Candidate tickers]
-C --> D[get_asset_fundamentals & calculate_technical_indicators]
-D --> S[Select Core & Underrated]
+```mermaid
+graph TD
+    A[Start] --> B{User Input};
+    B --> C[Master Orchestrator Agent];
 
-S --> P[allocate_portfolio (draft)]
-P --> O[Show Plan & Ask for Confirmation]
+    C --> D{What does the user want?};
 
-O -->|User confirms| X[update_portfolio_memory (batch/overwrite)]
-X --> J[Update user_portfolio.json]
+    D -->|Analyze current portfolio / future outlook| E[Load & Value Portfolio<br/>get_portfolio_state];
+    D -->|Ask about a stock / sector / idea| F[Research & Trend Discovery<br/>search_market_trends<br/>get_asset_fundamentals<br/>calculate_technical_indicators];
+    D -->|Invest X amount / change allocation| G[Draft Portfolio Plan<br/>allocate_portfolio];
 
-O -->|User wants changes| R
+    E --> H[Risk & Outlook Analysis<br/>LLM Reasoning];
+    F --> H;
+    G --> I{User happy with plan?};
 
+    I -->|No – refine| G;
+    I -->|Yes – execute| J[Update Portfolio Memory<br/>update_portfolio_memory];
+
+    H --> K[Build Structured Response<br/>Core Analysis + Underrated Picks + Glossary];
+    J --> E;  %% after execution, next analysis will use updated portfolio
+
+    K --> L[Display Answer to User];
+    L --> M[End];
+```
 
 ### Main Tools / Components
 
