@@ -84,27 +84,27 @@ The system uses a **Master Orchestrator Agent** plus several specialized tools.
 
 ```mermaid
 graph TD
-    A[Start] --> B{User Input};
-    B --> C[Master Orchestrator Agent];
-
-    C --> D{What does the user want?};
-
-    D -->|Analyze current portfolio / future outlook| E[Load & Value Portfolio<br/>get_portfolio_state];
-    D -->|Ask about a stock / sector / idea| F[Research & Trend Discovery<br/>search_market_trends<br/>get_asset_fundamentals<br/>calculate_technical_indicators];
-    D -->|Invest X amount / change allocation| G[Draft Portfolio Plan<br/>allocate_portfolio];
-
-    E --> H[Risk & Outlook Analysis<br/>LLM Reasoning];
-    F --> H;
-    G --> I{User happy with plan?};
-
-    I -->|No – refine| G;
-    I -->|Yes – execute| J[Update Portfolio Memory<br/>update_portfolio_memory];
-
-    H --> K[Build Structured Response<br/>Core Analysis + Underrated Picks + Glossary];
-    J --> E;  %% after execution, next analysis will use updated portfolio
-
-    K --> L[Display Answer to User];
-    L --> M[End];
+      A[Start] --> B{User Input};
+      B --> C[Master Orchestrator Agent];
+  
+      C --> D{What does the user want?};
+  
+      D -->|Analyze current portfolio / future outlook| E[Load & Value Portfolio<br/>get_portfolio_state];
+      D -->|Ask about a stock / sector / idea| F[Research & Trend Discovery<br/>search_market_trends<br/>get_asset_fundamentals<br/>calculate_technical_indicators];
+      D -->|Invest X amount / change allocation| G[Draft Portfolio Plan<br/>allocate_portfolio];
+  
+      E --> H[Risk & Outlook Analysis<br/>LLM Reasoning];
+      F --> H;
+      G --> I{User happy with plan?};
+  
+      I -->|No – refine| G;
+      I -->|Yes – execute| J[Update Portfolio Memory<br/>update_portfolio_memory];
+  
+      H --> K[Build Structured Response<br/>Core Analysis + Underrated Picks + Glossary];
+      J --> E;  %% after execution, next analysis will use updated portfolio
+  
+      K --> L[Display Answer to User];
+      L --> M[End];
 ```
 
 ### Main Tools / Components
