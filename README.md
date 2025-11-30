@@ -308,7 +308,7 @@ In short, this is not a static analyst; it’s an **assistive, conversational po
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/YUHESHWAR/Google-Capstone.git
+    git clone https://github.com/YUHESHWAR/WealthSense-AI.git
     ```
 
 2.  **Create a virtual environment and install dependencies:**
