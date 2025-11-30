@@ -81,7 +81,6 @@ Everything runs inside a single notebook / script using an agentic orchestration
 The system uses a **Master Orchestrator Agent** plus several specialized tools.
 
 ### High‑Level Flow
-
 R -->|Analyze my portfolio| M[get_portfolio_state]
 M --> PV[Compute current value & P/L]
 PV --> A[Risk & Trend Analysis]
@@ -98,6 +97,7 @@ O -->|User confirms| X[update_portfolio_memory (batch/overwrite)]
 X --> J[Update user_portfolio.json]
 
 O -->|User wants changes| R
+
 
 ### Main Tools / Components
 
@@ -325,7 +325,7 @@ In short, this is not a static analyst; it’s an **assistive, conversational po
 4.  **Initialize User Portfolio (Optional):**
     If you don't have an existing `user_portfolio.json`, the system will likely create one on first use. You can also create an empty one:
 
-    ```json
+    ```
     # user_portfolio.json
     {}
     ```
