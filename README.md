@@ -81,6 +81,7 @@ Everything runs inside a single notebook / script using an agentic orchestration
 The system uses a **Master Orchestrator Agent** plus several specialized tools.
 
 ### High‑Level Flow
+
 R -->|Analyze my portfolio| M[get_portfolio_state]
 M --> PV[Compute current value & P/L]
 PV --> A[Risk & Trend Analysis]
@@ -97,7 +98,6 @@ O -->|User confirms| X[update_portfolio_memory (batch/overwrite)]
 X --> J[Update user_portfolio.json]
 
 O -->|User wants changes| R
-
 
 ### Main Tools / Components
 
@@ -119,6 +119,7 @@ O -->|User wants changes| R
 
 - `get_portfolio_state()`  
   Loads `user_portfolio.json`, fetches **live prices**, and returns:
+
   - holdings (symbol, shares, current price, value)
   - cash
   - total portfolio value
@@ -127,6 +128,7 @@ O -->|User wants changes| R
 
 - `update_portfolio_memory(action, details)`  
   Applies changes to the saved portfolio:
+
   - `deposit_cash`
   - `buy_asset`
   - `batch_update` (merge new allocation into existing holdings)
@@ -141,8 +143,10 @@ O -->|User wants changes| R
 
 The Master Agent switches between four logical “modes”:
 
-### 1. Analysis Mode  
-Triggered by queries like:  
+### 1. Analysis Mode
+
+Triggered by queries like:
+
 > “How is my portfolio doing?”  
 > “What are the chances my portfolio will grow in the future?”
 
@@ -150,7 +154,7 @@ Actions:
 
 - Call `get_portfolio_state`
 - If empty → respond:  
-  *“This looks like your first investment! Let’s build a foundation.”*
+  _“This looks like your first investment! Let’s build a foundation.”_
 - If not empty:
   - Show **Portfolio Status**: current value vs cost basis, P/L %
   - For each holding, call fundamentals + technicals tools
@@ -159,10 +163,12 @@ Actions:
 
 ---
 
-### 2. Advisory Mode  
-Triggered by queries like:  
+### 2. Advisory Mode
+
+Triggered by queries like:
+
 > “I have ₹50,000 to invest in tech/AI.”  
-> “Suggest some growth stocks in clean energy.”  
+> “Suggest some growth stocks in clean energy.”
 
 Actions:
 
@@ -176,38 +182,46 @@ Actions:
 
 Output (strict structure):
 
-1. **Portfolio Status**  
+1. **Portfolio Status**
+
    - If existing portfolio: current value, P/L, brief summary.
    - If first time: explicitly say so.
 
-2. **Market Insight**  
+2. **Market Insight**
+
    - E.g., “Based on recent search trends, I focused on AI and cloud infrastructure…”
 
-3. **Core Portfolio Analysis**  
+3. **Core Portfolio Analysis**
+
    - Fundamentals table (symbol, sector, P/E, market cap, etc.)
    - Technicals table (volatility, recent trend)
    - Short explanation of each choice and its role in the portfolio.
 
-4. **Proposed Allocation**  
+4. **Proposed Allocation**
+
    - Table with: Asset | Price | Shares | Value | Weight %
 
-5. **Underrated Stocks to Consider**  
+5. **Underrated Stocks to Consider**
+
    - 1–2 names **not** in the main allocation
    - Why they have high growth potential
    - Why they were excluded from the core (e.g., too volatile, small cap)
 
-6. **Glossary**  
+6. **Glossary**
+
    - Simple definitions of any technical terms used (e.g., volatility, P/E, diversification).
 
-7. **Confirmation Prompt**  
-   - E.g., *“Does this plan look good? Say ‘yes’ to execute or tell me what to change.”*
+7. **Confirmation Prompt**
+   - E.g., _“Does this plan look good? Say ‘yes’ to execute or tell me what to change.”_
 
 ---
 
-### 3. Refinement Mode  
-Triggered by queries like:  
+### 3. Refinement Mode
+
+Triggered by queries like:
+
 > “Remove BTC from the plan.”  
-> “Can we reduce Nvidia and add more Microsoft?”  
+> “Can we reduce Nvidia and add more Microsoft?”
 
 Actions:
 
@@ -217,10 +231,12 @@ Actions:
 
 ---
 
-### 4. Execution Mode  
-Triggered only when user explicitly confirms:  
+### 4. Execution Mode
+
+Triggered only when user explicitly confirms:
+
 > “Yes, go ahead.”  
-> “Confirm this plan.”  
+> “Confirm this plan.”
 
 Actions:
 
@@ -244,7 +260,7 @@ This project is fundamentally different in three ways:
 ### 1. Agentic, Not Just Analytic
 
 - **Regular tools:** You decide everything, tools only show numbers.
-- **This copilot:**  
+- **This copilot:**
   - **Proposes** ideas based on web trends and risk
   - **Explains** why each asset is chosen or excluded
   - **Asks for confirmation** and then executes simulated trades
@@ -282,36 +298,40 @@ In short, this is not a static analyst; it’s an **assistive, conversational po
 ### Installation
 
 1.  **Clone the repository:**
+
     ```bash
-    git clone https://github.com/your-repo/financial-copilot.git
-    cd financial-copilot
+    git clone https://github.com/YUHESHWAR/Google-Capstone.git
     ```
 
 2.  **Create a virtual environment and install dependencies:**
+
     ```bash
     python -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     pip install -r requirements.txt
     ```
-    *(Note: A `requirements.txt` file is expected in the project root containing necessary libraries.)*
+
+    _(Note: A `requirements.txt` file is expected in the project root containing necessary libraries.)_
 
 3.  **Set up your Google API Key:**
     Create a `.env` file in the project root and add your Gemini API key:
+
     ```
     GOOGLE_API_KEY="YOUR_GEMINI_API_KEY"
     ```
-    *(Ensure you have enabled the Gemini 2.5 Flash model for your API key.)*
+
+    _(Ensure you have enabled the Gemini 2.5 Flash model for your API key.)_
 
 4.  **Initialize User Portfolio (Optional):**
     If you don't have an existing `user_portfolio.json`, the system will likely create one on first use. You can also create an empty one:
+
     ```json
     # user_portfolio.json
     {}
     ```
 
 5.  **Run the Copilot:**
-    Execute the main script or notebook to start interacting with the financial copilot.
+    Launch Jupyter Notebook or JupyterLab and open `FinanceAssistant.ipynb`. Run the cells sequentially to initialize the agent and start the interaction.
     ```bash
-    python main.py # Or similar command depending on your project's entry point
+    jupyter notebook FinanceAssistant.ipynb
     ```
-
